@@ -18,8 +18,7 @@ module.exports = {
 
         if(!usuario) {
             return res.status(401).json({messagem: "E-mail ou senha incorretos!"})
-        }  
-
+        }
         
         
         return res.json({ok: usuario})
