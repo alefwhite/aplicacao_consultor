@@ -3,6 +3,25 @@ import  './style.css';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Form, Input, InputGroup, Card, CardBody, Button, CardTitle, CardText, Label} from 'reactstrap';
 import Header from '../../assets/components/Header';
+import toastr from 'toastr';
+
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5500",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+}
 
  const Home = () => {  
     
