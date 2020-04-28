@@ -1,5 +1,6 @@
 const connection = require('../../database/connection');
-const bcrypt = require('bcryptjs');
+const md5 = require('md5');
+const config = require('../../config/global');
 
 module.exports = {
     async index(req, res) {
@@ -11,7 +12,8 @@ module.exports = {
     async create(req, res) {        
         const { nome, email, senha, tipo_usuario } = req.body;
 
-        const senha_hash = await bcrypt.hash(senha, 8);
+       const senha_hash = md5(senha + config.SALT_KEY);
+
     
         const retorno = await connection('usuario').insert({ 
             nome,
