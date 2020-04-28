@@ -1,9 +1,13 @@
 const express = require('express');
+const SessionController = require('./app/controllers/SessionController');
 const tipoUsuarioController = require('./app/controllers/TipoUsuarioController');
 const UsuarioController = require('./app/controllers/UsuarioController');
 const MensagemController = require('./app/controllers/MensagemController');
 
 const routes = express.Router();
+
+// Login
+routes.post('/session', SessionController.create);
 
 // TipoUsuario
 routes.get('/tipoUsuario', tipoUsuarioController.index);
