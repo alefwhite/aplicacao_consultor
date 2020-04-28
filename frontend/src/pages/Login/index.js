@@ -1,12 +1,10 @@
 import React from 'react';
+import  './style.css';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Form, Input, InputGroup, Card, CardBody, Button} from 'reactstrap';
-import useClass from '../../hooks/add-class-body';
 
  const Login = () => {  
-
-     useClass('page-login');
-
+    
      const handleLogin = (e) => {
         e.preventDefault();
         alert("Login efetuado com sucesso..")
@@ -23,7 +21,7 @@ import useClass from '../../hooks/add-class-body';
                                     <Form onSubmit={handleLogin}>
                                         <h1>Login</h1>
                                         <p>
-                                            Entre com e-mail e senha para acessar. <Link to="/register">Criar conta?</Link>
+                                            Entre com e-mail e senha para acessar. <Link to="/registrar">Criar conta?</Link>
                                         </p>
                                         <InputGroup className="mb-3">
                                             <Input type="email" placeholder="E-mail"/>

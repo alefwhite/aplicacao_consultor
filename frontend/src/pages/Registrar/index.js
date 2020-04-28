@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
+import  './style.css';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Form, Input, InputGroup, Card, CardBody, Button} from 'reactstrap';
-import useClass from '../../hooks/add-class-body';
 
- const Register = () => {  
+const Register = (props) => {  
     // const [tipoUsuario, settipoUsuario] = useState("");
 
-    useClass('page-login');
 
      const handleRegister = (e) => {
         e.preventDefault();
@@ -25,13 +24,13 @@ import useClass from '../../hooks/add-class-body';
                                         <h1>Nova conta</h1>
                                         <p>
                                             Coloque seu nome, e-mail e senha para criar uma conta.<br/>
-                                            Já tem uma conta? <Link to="/login">Login</Link>
+                                            Já tem uma conta? <Link to="/">Login</Link>
                                         </p>
                                         
                                         <InputGroup className="mb-3">
                                             <Input type="select">
-                                                <option value={1}>Consultor</option>
-                                                <option value={2}>Participante</option>
+                                                <option value={1}>Consultor?</option>
+                                                <option value={2}>Participante?</option>
                                             </Input>
                                         </InputGroup>
                                         <InputGroup className="mb-3">
