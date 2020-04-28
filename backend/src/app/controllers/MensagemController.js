@@ -2,7 +2,45 @@ const connection = require('../../database/connection');
 
 module.exports = {
     async index(req, res) {
-        const mensagens = await connection('mensagem').select("*");    
+        const { nome = "giovanna", updated_at = "2020-04-28", order = 1} = req.query;
+        
+        const order_by = order == 1 ? "desc" : "asc";
+
+        let mensagens = "";
+              
+        if(updated_at && !nome) {
+            mensagens = await connection("mensagem")     
+            .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
+            .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
+            .where("mensagem.updated_at", "like", `%${updated_at.toLowerCase()}%`)
+            .orderBy("mensagem.updated_at", order_by);
+        }
+        else if(nome && !updated_at) {
+            console.log("else if 1")
+            mensagens = await connection("mensagem")     
+            .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
+            .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
+            .where("usuario.nome", "like",`%${nome.toLowerCase()}%`)
+            .orderBy("mensagem.id", order_by);
+        } 
+        else if(nome && updated_at) {
+            console.log("else if 2")
+             mensagens = await connection("mensagem")     
+            .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
+            .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
+            .where("usuario.nome", "like",`%${nome.toLowerCase()}%`)
+            .andWhere("mensagem.updated_at", "like", `%${updated_at.toLowerCase()}%`)
+            .orderBy("mensagem.id", order_by);
+        }
+        else {
+            console.log("else")
+            mensagens = await connection("mensagem")     
+            .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
+            .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
+            .orderBy("mensagem.id", order_by);
+        }
+        
+        
 
         return res.json(mensagens);
     },

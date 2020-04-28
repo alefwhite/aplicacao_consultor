@@ -139,18 +139,20 @@ toastr.options = {
             </div>
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalHeader toggle={toggle}>Inserir Nova Mensagem</ModalHeader>
-                <ModalBody>
-                    <FormGroup  className="p-1">
-                        <Col sm="12">
-                            <Label for="msg" style={{fontSize:"1.2em"}}>Escreva aqui sua mensagem!</Label>
-                            <Input type="textarea" name="text" id="msg" size="lg" style={{height:"150px"}}/>
-                        </Col>
-                    </FormGroup>
-                </ModalBody>
-                <ModalFooter>
-                    <Button outline color="info" onClick={toggle}>Salvar</Button>{' '}
-                    <Button outline color="secondary" onClick={toggle}>Sair</Button>
-                </ModalFooter>
+                <Form onSubmit={toggle}>
+                    <ModalBody>
+                        <FormGroup  className="p-1">
+                            <Col sm="12">
+                                <Label for="msg" style={{fontSize:"1.2em"}}>Escreva aqui sua mensagem!</Label>
+                                <Input required type="textarea" name="text" id="msg" size="lg" style={{height:"150px"}}/>
+                            </Col>
+                        </FormGroup>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button outline color="info">Salvar</Button>{' '}
+                        <Button outline color="secondary" onClick={toggle}>Sair</Button>
+                    </ModalFooter>
+                </Form>
             </Modal>           
         </>
     );
