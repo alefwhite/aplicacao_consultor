@@ -1,7 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import  './style.css';
 import { Link } from 'react-router-dom';
-import { Container, Row, Col, Form, Input, InputGroup, Card, CardBody, Button, CardTitle, CardText, Label} from 'reactstrap';
+import { 
+    Container, 
+    Row, 
+    Col, 
+    Form, 
+    Input, 
+    InputGroup, 
+    Card, 
+    CardBody, 
+    Button, 
+    CardTitle, 
+    CardText, 
+    Label,
+    Modal, 
+    ModalHeader, 
+    ModalBody, 
+    ModalFooter,
+    FormGroup 
+} from 'reactstrap';
 import Header from '../../assets/components/Header';
 import toastr from 'toastr';
 
@@ -24,11 +42,13 @@ toastr.options = {
 }
 
  const Home = () => {  
-    
-     const handleLogin = (e) => {
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+
+    const handleLogin = (e) => {
         e.preventDefault();
         alert("Login efetuado com sucesso..")
-     }
+    }
 
     return (
         <>
@@ -44,6 +64,11 @@ toastr.options = {
                                         Coloque seu nome, e-mail e senha para criar uma conta.<br/>
                                         
                                     </p>
+                                    <Row>
+                                        <Col md="12" className="mt-5">
+                                            <Button outline color="primary" size="lg" block onClick={toggle}>Nova Mensagem?</Button>
+                                        </Col>
+                                    </Row>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -57,13 +82,13 @@ toastr.options = {
                                             <Label for="exampleDate">Username</Label>
                                             <Input 
                                                 type="text" 
-                                                className="ml-2 mr-4"
+                                                className="ml-2 mr-3"
                                                 placeholder="Digite o username desejado"
                                             />
 
                                             <Label for="exampleDate">Data</Label>
                                             <Input 
-                                                className="ml-2 mr-4"
+                                                className="ml-2 mr-3"
                                                 type="date"
                                                 name="date"
                                                 id="exampleDate"
@@ -111,7 +136,22 @@ toastr.options = {
                         </Col>
                     </Row>                    
                 </Container>
-            </div>           
+            </div>
+            <Modal isOpen={modal} toggle={toggle} >
+                <ModalHeader toggle={toggle}>Inserir Nova Mensagem</ModalHeader>
+                <ModalBody>
+                    <FormGroup  className="p-1">
+                        <Col sm="12">
+                            <Label for="msg" style={{fontSize:"1.2em"}}>Escreva aqui sua mensagem!</Label>
+                            <Input type="textarea" name="text" id="msg" size="lg" style={{height:"150px"}}/>
+                        </Col>
+                    </FormGroup>
+                </ModalBody>
+                <ModalFooter>
+                    <Button outline color="info" onClick={toggle}>Salvar</Button>{' '}
+                    <Button outline color="secondary" onClick={toggle}>Sair</Button>
+                </ModalFooter>
+            </Modal>           
         </>
     );
  }
