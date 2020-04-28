@@ -22,7 +22,7 @@ export default function Header() {
     return (
         <header>
         <Navbar color="light" light expand="md">
-            <NavbarBrand href="/" >Formare Tech</NavbarBrand>
+            <NavbarBrand href="/home" >Formare Tech</NavbarBrand>
             <NavbarToggler />
             <Collapse navbar>
                 <Nav className="mr-auto" navbar>

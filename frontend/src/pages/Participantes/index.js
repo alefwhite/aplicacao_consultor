@@ -30,37 +30,33 @@ import Header from '../../assets/components/Header';
                         <Col md="12" className="mt-5">                          
                             <Card>
                                 <CardBody>
-                                    <h2 className="mb-5 d-flex justify-content-center">Participantes</h2>
-                                    <Row className="p-5">
+                                    <h2 className="mb-3 d-flex justify-content-center">Participantes</h2>
+                                    <Row className="p-5 ml-5">
                                         <Col sm="6" className="mb-4">
                                             <h2 className="mb-4">Grupo 1</h2>
                                             <Table hover bordered>
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>First Name</th>
-                                                            <th>Last Name</th>
                                                             <th>Username</th>
+                                                            <th>E-mail</th>                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row">1</th>
                                                             <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
+                                                            <td>Otto</td>                                                           
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">2</th>
                                                             <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
+                                                            <td>Thornton</td>                                                            
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">3</th>
                                                             <td>Larry</td>
-                                                            <td>the Bird</td>
-                                                            <td>@twitter</td>
+                                                            <td>the Bird</td>                                                          
                                                         </tr>
                                                     </tbody>
                                             </Table>
@@ -69,32 +65,28 @@ import Header from '../../assets/components/Header';
                                         <Col sm="6" className="mb-4">
                                             <h2 className="mb-4">Grupo 2</h2>
                                             <Table hover bordered>
-                                                    <thead>
+                                            <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>First Name</th>
-                                                            <th>Last Name</th>
                                                             <th>Username</th>
+                                                            <th>E-mail</th>                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row">1</th>
                                                             <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
+                                                            <td>Otto</td>                                                           
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">2</th>
                                                             <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
+                                                            <td>Thornton</td>                                                            
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">3</th>
                                                             <td>Larry</td>
-                                                            <td>the Bird</td>
-                                                            <td>@twitter</td>
+                                                            <td>the Bird</td>                                                          
                                                         </tr>
                                                     </tbody>
                                             </Table>
@@ -103,32 +95,28 @@ import Header from '../../assets/components/Header';
                                         <Col sm="6" className="mt-2">
                                             <h2 className="mb-4">Grupo 3</h2>
                                             <Table hover bordered>
-                                                    <thead>
+                                            <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>First Name</th>
-                                                            <th>Last Name</th>
                                                             <th>Username</th>
+                                                            <th>E-mail</th>                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row">1</th>
                                                             <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
+                                                            <td>Otto</td>                                                           
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">2</th>
                                                             <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
+                                                            <td>Thornton</td>                                                            
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">3</th>
                                                             <td>Larry</td>
-                                                            <td>the Bird</td>
-                                                            <td>@twitter</td>
+                                                            <td>the Bird</td>                                                          
                                                         </tr>
                                                     </tbody>
                                             </Table>
@@ -137,32 +125,28 @@ import Header from '../../assets/components/Header';
                                         <Col sm="6" className="mt-2">
                                             <h2 className="mb-4">Grupo 4</h2>
                                             <Table hover bordered>
-                                                    <thead>
+                                            <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>First Name</th>
-                                                            <th>Last Name</th>
                                                             <th>Username</th>
+                                                            <th>E-mail</th>                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row">1</th>
                                                             <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
+                                                            <td>Otto</td>                                                           
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">2</th>
                                                             <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
+                                                            <td>Thornton</td>                                                            
                                                         </tr>
                                                         <tr>
                                                             <th scope="row">3</th>
                                                             <td>Larry</td>
-                                                            <td>the Bird</td>
-                                                            <td>@twitter</td>
+                                                            <td>the Bird</td>                                                          
                                                         </tr>
                                                     </tbody>
                                             </Table>
