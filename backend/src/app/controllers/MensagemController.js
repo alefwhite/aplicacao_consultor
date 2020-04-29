@@ -38,8 +38,7 @@ module.exports = {
             .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
             .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
             .orderBy("mensagem.id", order_by);
-        }
-        
+        }        
         
 
         return res.json(mensagens);
@@ -47,7 +46,7 @@ module.exports = {
 
     async create(req, res) {        
         const { msg } = req.body;
-        const id_usuario = req.headers.authorization;
+        const id_usuario = req.id;
 
         let formatter = new Intl.DateTimeFormat('pt-BR', {
             month: '2-digit',
@@ -73,7 +72,7 @@ module.exports = {
 
     async delete(req, res) {
         const { id } = req.params;
-        const id_usuario = req.headers.authorization;
+        const id_usuario = req.id;
        
         const mensagem = await connection("mensagem").where('id', id).select("id_usuario").first();
         const tipoUsuario = await connection("usuario").where('id', id_usuario).select("tipo_usuario").first();
@@ -89,7 +88,7 @@ module.exports = {
 
     async update(req, res) {
         const { id } = req.params;
-        const id_usuario = req.headers.authorization;
+        const id_usuario = req.id;
         const { msg } = req.body;
 
         let formatter = new Intl.DateTimeFormat('pt-BR', {

@@ -3,6 +3,7 @@ const SessionController = require('./app/controllers/SessionController');
 const tipoUsuarioController = require('./app/controllers/TipoUsuarioController');
 const UsuarioController = require('./app/controllers/UsuarioController');
 const MensagemController = require('./app/controllers/MensagemController');
+const authMiddleware = require('./middlewares/auth');
 
 const routes = express.Router();
 
@@ -17,6 +18,8 @@ routes.post('/tipoUsuario', tipoUsuarioController.create);
 routes.get('/usuario', UsuarioController.index);
 routes.post('/usuario', UsuarioController.create);
 
+
+routes.use(authMiddleware);
 // Mensagem
 routes.get('/mensagem', MensagemController.index);
 routes.post('/mensagem', MensagemController.create);
