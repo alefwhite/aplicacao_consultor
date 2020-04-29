@@ -1,7 +1,15 @@
 const express = require('express');
+const cors = require('cors');
+const app = express();
 const routes = require('./routes');
 
-const app = express();
+app.use(cors({
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+}));
+
 
 app.use(express.json());
 app.use(routes);
