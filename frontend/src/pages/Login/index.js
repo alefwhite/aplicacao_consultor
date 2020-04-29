@@ -54,7 +54,7 @@ toastr.options = {
             }
 
         } catch (error) {
-            
+            toastr.error("Email ou senha incorreto!");
         }
      }
 

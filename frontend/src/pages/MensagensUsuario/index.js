@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import  './style.css';
 import { 
     Container, 
     Row, 
     Col, 
     Form, 
     Input, 
-    InputGroup, 
     Card, 
     CardBody, 
     Button, 
@@ -41,18 +39,13 @@ toastr.options = {
     "hideMethod": "fadeOut"
 }
 
- const Home = () => {  
+ const MinhasMensagens = () => {  
     const [modal, setModal] = useState(false);
     const [mensagens, setMensagens] = useState([]);
-    const [novaMensagem, setNovaMensagem] = useState("");
-
-    const [userName, setUserName] = useState("");
-    const [data, setData] = useState("");
-    const [ordenar, setOrdenar] = useState(1);
-
+    const [editarMsg, setEditarMsg] = useState("");
+    
     const tipoUsuario = JSON.parse(localStorage.getItem("usuario"));
-    console.log(tipoUsuario)
-
+    const [idMsg, setIdMsg] = useState("");
     const toggle = () => setModal(!modal);
 
     useEffect(() => {
@@ -61,7 +54,7 @@ toastr.options = {
     }, [mensagens.id]);
 
     function ListarMensagens() {
-        api.get('/mensagem')
+        api.get(`/mensagemUsuario/${tipoUsuario.id}`)
         .then(response => {
             setMensagens(response.data);
             console.log(response.data)
@@ -82,45 +75,31 @@ toastr.options = {
        }
     }
 
-    async function handleNovaMensagem(e) {
+   
+    async function handleUpdateMensagem(id) {
+        setIdMsg(id);
+        toggle();       
+    }
+
+    async function handleEditarMensagem(e) {
         e.preventDefault();
-        
+
         const data = {
-            msg: novaMensagem
+            msg: editarMsg
         };
 
         try {
-            const response = await api.post('/mensagem', data);
-
-            if(response.status === 200) {
-                toastr.info(response.data.message);
-                setNovaMensagem("");
+            await api.put(`/mensagem/${idMsg}`, data)
+            .then(response => {
+                console.log("edit",response)
+                if(response.status === 200) toastr.success("Sua mensagem foi editada com sucesso!");
                 ListarMensagens();
-                toggle();
-                                
-            }
-            console.log(response);
-            
+                toggle(); 
+            });
 
-        } catch(erro) {
-            toastr.error("Falha ao cadastrar mensagem, tente novamente");
-        }
-    }
-
-    async function filtrarMsgs(e) {
-        e.preventDefault();
-
-        await api.get(`/mensagem?nome=${userName}&&updated_at=${data}&&order=${ordenar}`)
-        .then(response => {                      
-            setMensagens(response.data);            
-            
-            console.log(response.data)
-        });
-
-        console.log(userName)
-        console.log(data)
-        console.log(ordenar)
-
+       } catch(erro) {
+           alert('Erro ao deletar caso, tente novamente.')
+       }
     }
 
     function FormatarData(data) {
@@ -150,50 +129,14 @@ toastr.options = {
                                         Coloque seu nome, e-mail e senha para criar uma conta.<br/>
                                         
                                     </p>
-                                    <Row>
-                                        <Col md="12" className="mt-5">
-                                            <Button outline color="primary" size="lg" block onClick={toggle}>Nova Mensagem?</Button>
-                                        </Col>
-                                    </Row>
+                                   
                                 </CardBody>
                             </Card>
                         </Col>
                         <Col md="12" className="mt-5 p-4">
                             <Card>
-                                <CardBody>
-                                    <Form onSubmit={filtrarMsgs}>
-                                        <h1 className=" d-flex justify-content-center">Mensagens</h1>                                      
-                                        
-                                        <InputGroup className="mt-3 p-5">
-                                            <Label for="exampleDate">Username</Label>
-                                            <Input 
-                                                type="text" 
-                                                className="ml-2 mr-3"
-                                                placeholder="Digite o username desejado"
-                                                value={userName}
-                                                onChange={e => setUserName(e.target.value)}
-                                            />
-
-                                            <Label for="exampleDate">Data</Label>
-                                            <Input 
-                                                className="ml-2 mr-3"
-                                                type="date"
-                                                name="date"
-                                                id="exampleDate"
-                                                value={data}
-                                                onChange={e => setData(e.target.value)}
-                                            />
-
-                                            <Label for="exampleDate">Ordenar</Label>
-                                            <Input type="select" className="ml-2" value={ordenar} onChange={e => setOrdenar(e.target.value)}>
-                                                <option value={1}>Mais recentes</option>
-                                                <option value={2}>Mais antigas</option>
-                                            </Input>
-                                            <Button className="ml-3" color="success" type="submit">Filtrar</Button>
-                                        </InputGroup>
-                                        
-                                        
-                                    </Form>
+                                <CardBody>                                  
+                                    <h1 className="mb-4 d-flex justify-content-center">Suas Mensagens</h1> 
 
                                     <Col md="12" className="mt-2">
                                         <Row>
@@ -206,9 +149,8 @@ toastr.options = {
                                                             <CardTitle style={{fontSize:"1.2em"}}>Mensagem de: {msg.nome.toUpperCase()}</CardTitle>
                                                             <CardText>{msg.msg}</CardText>
                                                             <CardText>Data: {FormatarData(msg.updated_at)}</CardText>
-                                                            {tipoUsuario.tipo_usuario === 1 ? 
-                                                                <Button outline color="danger" onClick={() => handleDeleteMensagem(msg.id)}>Apagar</Button> : ""
-                                                            }
+                                                            <Button className="mb-3" outline color="primary" onClick={() => handleUpdateMensagem(msg.id)}>Editar</Button>
+                                                            <Button outline color="danger" onClick={() => handleDeleteMensagem(msg.id)}>Apagar</Button>
                                                         </Card>
                                                     </Col>                                                                                  
                                                 
@@ -224,8 +166,8 @@ toastr.options = {
                 </Container>
             </div>
             <Modal isOpen={modal} toggle={toggle} >
-                <ModalHeader toggle={toggle}>Inserir Nova Mensagem</ModalHeader>
-                <Form onSubmit={handleNovaMensagem}>
+                <ModalHeader toggle={toggle}>Editar Mensagem</ModalHeader>
+                <Form onSubmit={handleEditarMensagem}>
                     <ModalBody>
                         <FormGroup  className="p-1">
                             <Col sm="12">
@@ -235,14 +177,14 @@ toastr.options = {
                                     name="text" id="msg" 
                                     size="lg" 
                                     style={{height:"150px"}}
-                                    value={novaMensagem}
-                                    onChange={e => setNovaMensagem(e.target.value)}
+                                    value={editarMsg}
+                                    onChange={e => setEditarMsg(e.target.value)}
                                 />
                             </Col>
                         </FormGroup>
                     </ModalBody>
                     <ModalFooter>
-                        <Button outline color="info" type="submit">Salvar</Button>{' '}
+                        <Button outline color="info" type="submit">Editar</Button>{' '}
                         <Button outline color="secondary" onClick={toggle}>Sair</Button>
                     </ModalFooter>
                 </Form>
@@ -251,4 +193,4 @@ toastr.options = {
     );
  }
 
-export default Home;
+export default MinhasMensagens;

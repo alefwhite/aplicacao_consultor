@@ -22,6 +22,7 @@ routes.post('/usuario', UsuarioController.create);
 routes.use(authMiddleware);
 // Mensagem
 routes.get('/mensagem', MensagemController.index);
+routes.get('/mensagemUsuario/:id', MensagemController.mensagemUsuario);
 routes.post('/mensagem', MensagemController.create);
 routes.delete('/mensagem/:id', MensagemController.delete);
 routes.put('/mensagem/:id', MensagemController.update);

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Table, Card, CardBody, Button, CardTitle, CardText, Label} from 'reactstrap';
+import { Container, Row, Col, Table, Card, CardBody} from 'reactstrap';
 import Header from '../../assets/components/Header';
 
  const Participantes = () => {  

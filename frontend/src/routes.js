@@ -6,7 +6,7 @@ import Registrar from './pages/Registrar';
 import Home from './pages/Home';
 import Participantes from './pages/Participantes';
 import NotFound from './assets/components/Notfound';
-
+import MinhasMensagens from './pages/MensagensUsuario';
 
 const Permissao = ({ component : Component}) => (
     <Route
@@ -29,6 +29,7 @@ export default function Routes() {
                     <Route exact path="/registrar" component={Registrar}/>
                     <Route exact path="/home" component={Home}/>
                     <Route exact path="/participantes" component={Participantes}/>
+                    <Route exact path="/minhasMensagens" component={MinhasMensagens}/>
                     <Route component={NotFound}/>
 
             </Switch>        

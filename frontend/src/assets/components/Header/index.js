@@ -30,6 +30,9 @@ export default function Header() {
                         <NavLink href="/home">Home</NavLink>
                     </NavItem>                              
                     <NavItem>
+                        <NavLink href="/minhasMensagens">Minhas-Mensagens</NavLink>
+                    </NavItem>                              
+                    <NavItem>
                         <NavLink href="/participantes">Participantes</NavLink>
                     </NavItem>                              
                 </Nav>

@@ -2,7 +2,7 @@ const connection = require('../../database/connection');
 
 module.exports = {
     async index(req, res) {
-        const { nome = "giovanna", updated_at = "2020-04-28", order = 1} = req.query;
+        const { nome = "", updated_at = "", order = 1} = req.query;
         
         const order_by = order == 1 ? "desc" : "asc";
 
@@ -67,7 +67,7 @@ module.exports = {
         });
        
     
-        return res.json({message: "Usuário criado com sucesso!", retorno});
+        return res.json({message: "Mensagem enviada com sucesso!", retorno});
     },
 
     async delete(req, res) {
@@ -115,6 +115,19 @@ module.exports = {
         return res.status(401).json({messagem: "Operação não permitida apenas usuário que criou a mensagem ou consultor pode deletar!"})
        
     },
+
+    async mensagemUsuario(req, res) {
+       const { id } = req.params;
+       
+       const mensagens = await connection("mensagem")     
+        .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
+        .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
+        .where("mensagem.id_usuario", id)
+        .orderBy("mensagem.id", "desc");
+
+
+        return res.json(mensagens);
+    }
 
 
 
