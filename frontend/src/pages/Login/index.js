@@ -1,13 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import  './style.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Container, Row, Col, Form, Input, InputGroup, Card, CardBody, Button} from 'reactstrap';
+import api from '../../service/api';
+import toastr from 'toastr';
+
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": false,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "5500",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
 
  const Login = () => {  
-    
-     const handleLogin = (e) => {
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+
+    const history = useHistory();
+
+
+     async function handleLogin (e) {
         e.preventDefault();
-        alert("Login efetuado com sucesso..")
+        
+        const data = {
+            email,
+            senha
+        }
+
+        try {
+            const response = await api.post('/session', data);
+
+            if(response.status === 200) {
+                localStorage.setItem("usuario", JSON.stringify(response.data.usuario));
+                localStorage.setItem("token", response.data.token); 
+
+                toastr.success("Login efetuado com sucesso!");
+
+                history.push('/home');
+
+                console.log(response);
+
+            }
+
+        } catch (error) {
+            
+        }
      }
 
     return (
@@ -24,10 +72,20 @@ import { Container, Row, Col, Form, Input, InputGroup, Card, CardBody, Button} f
                                             Entre com e-mail e senha para acessar. <Link to="/registrar">Criar conta?</Link>
                                         </p>
                                         <InputGroup className="mb-3">
-                                            <Input type="email" placeholder="E-mail"/>
+                                            <Input 
+                                                type="email" 
+                                                placeholder="E-mail" 
+                                                onChange={e => setEmail(e.target.value)}
+                                                value={email}
+                                            />
                                         </InputGroup>
                                         <InputGroup className="mb-3">
-                                            <Input type="password" placeholder="Senha"/>
+                                            <Input 
+                                                type="password" 
+                                                placeholder="Senha"
+                                                onChange={e => setSenha(e.target.value)}
+                                                value={senha}
+                                            />
                                         </InputGroup>
                                         <InputGroup>
                                             <Button outline color="primary" type="submit">Entrar</Button>
