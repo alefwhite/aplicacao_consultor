@@ -58,24 +58,26 @@ toastr.options = {
     const toggle = () => setModal(!modal);
 
     useEffect( () => {
-        api.get('/mensagem')
-        .then(response => {
-            setMensagens(response.data);
-            console.log(response.data)
-            setLoad(true);
-        });     
+        // api.get('/mensagem')
+        // .then(response => {
+        //     setMensagens(response.data);
+        //     console.log(response.data)
+        //     setLoad(true);
+        // });     
 
-        // async function fetchMsg() {
-        //     await api.get('/mensagem')
-        //     .then(response => {
-        //         setMensagens(response.data);
-        //         console.log(response.data)
-        //         setLoad(true);
-        //     });          
+        async function fetchMsg() {
+            await api.get('/mensagem')
+            .then(response => {
+                setMensagens(response.data);
+                console.log(response.data)
+                setLoad(true);
+            });          
             
-        // }
+        }
         
-        // fetchMsg();       
+        setTimeout(() => {
+            fetchMsg();
+        }, 600)
 
     }, []);
 
