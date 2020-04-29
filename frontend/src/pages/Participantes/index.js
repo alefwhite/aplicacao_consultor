@@ -1,13 +1,27 @@
-import React from 'react';
-import { Container, Row, Col, Table, Card, CardBody} from 'reactstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Row, Col, Table, Card, CardBody, Button} from 'reactstrap';
 import Header from '../../assets/components/Header';
 import retornaUsuarioLogado from '../../service/nome';
+import api from '../../service/api';
 
  const Participantes = () => {  
-    
-     const handleLogin = (e) => {
+    const [participantes, setParticipantes] = useState([]);
+
+    useEffect(() => {
+        ListarParticipantes();
+
+    }, [participantes.id]);
+
+    function ListarParticipantes() {
+        api.get(`/`)
+        .then(response => {
+            setParticipantes(response.data);
+            console.log(response.data)
+        });
+    }
+     const recarregarParticipantes = (e) => {
         e.preventDefault();
-        alert("Login efetuado com sucesso..")
+        alert("Gerando grupo..")
      }
 
     return (
@@ -21,9 +35,13 @@ import retornaUsuarioLogado from '../../service/nome';
                                 <CardBody className="p-4">
                                     <h1>Bem vindo! - <span style={{fontSize: "0.8em"}}>{retornaUsuarioLogado().toUpperCase()}</span> </h1>
                                     <p>
-                                        Coloque seu nome, e-mail e senha para criar uma conta.<br/>
-                                        
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br/>                                        
                                     </p>
+                                    <Row>
+                                        <Col md="12" className="mt-5">
+                                            <Button outline color="success" size="lg" block onClick={recarregarParticipantes}>Dividir grupo novamente?</Button>
+                                        </Col>
+                                    </Row>
                                 </CardBody>
                             </Card>
                         </Col>

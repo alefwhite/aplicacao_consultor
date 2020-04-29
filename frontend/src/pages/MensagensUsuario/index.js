@@ -127,8 +127,7 @@ toastr.options = {
                                 <CardBody className="p-4">
                                     <h1>Bem vindo! - <span style={{fontSize: "0.8em"}}>{retornaUsuarioLogado().toUpperCase()}</span> </h1>
                                     <p>
-                                        Coloque seu nome, e-mail e senha para criar uma conta.<br/>
-                                        
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br/>    
                                     </p>
                                    
                                 </CardBody>
