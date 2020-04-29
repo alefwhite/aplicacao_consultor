@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Table, Card, CardBody} from 'reactstrap';
 import Header from '../../assets/components/Header';
+import usuarioNome from '../../service/nome';
 
  const Participantes = () => {  
     
@@ -18,7 +19,7 @@ import Header from '../../assets/components/Header';
                         <Col md="12">
                             <Card>
                                 <CardBody className="p-4">
-                                    <h1>Bem vindo!</h1>
+                                    <h1>Bem vindo! - <span style={{fontSize: "0.8em"}}>{usuarioNome.toUpperCase()}</span> </h1>
                                     <p>
                                         Coloque seu nome, e-mail e senha para criar uma conta.<br/>
                                         

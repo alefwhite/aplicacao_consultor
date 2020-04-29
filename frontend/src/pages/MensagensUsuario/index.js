@@ -20,6 +20,7 @@ import {
 import Header from '../../assets/components/Header';
 import api from '../../service/api';
 import toastr from 'toastr';
+import usuarioNome from '../../service/nome';
 
 toastr.options = {
     "closeButton": true,
@@ -47,6 +48,8 @@ toastr.options = {
     const tipoUsuario = JSON.parse(localStorage.getItem("usuario"));
     const [idMsg, setIdMsg] = useState("");
     const toggle = () => setModal(!modal);
+
+    console.log(usuarioNome)
 
     useEffect(() => {
         ListarMensagens();
@@ -124,7 +127,7 @@ toastr.options = {
                         <Col md="12">
                             <Card>
                                 <CardBody className="p-4">
-                                    <h1>Bem vindo!</h1>
+                                    <h1>Bem vindo! - <span style={{fontSize: "0.8em"}}>{usuarioNome.toUpperCase()}</span> </h1>
                                     <p>
                                         Coloque seu nome, e-mail e senha para criar uma conta.<br/>
                                         
