@@ -50,9 +50,13 @@ toastr.options = {
     const toggle = () => setModal(!modal);
     
     useEffect(() => {
-        ListarMensagens();
+        api.get(`/mensagemUsuario/${tipoUsuario.id}`)
+        .then(response => {
+            setMensagens(response.data);
+            console.log(response.data)
+        });
 
-    }, [mensagens.id]);
+    }, [tipoUsuario.id]);
 
     function ListarMensagens() {
         api.get(`/mensagemUsuario/${tipoUsuario.id}`)

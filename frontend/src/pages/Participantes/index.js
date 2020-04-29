@@ -6,22 +6,83 @@ import api from '../../service/api';
 
  const Participantes = () => {  
     const [participantes, setParticipantes] = useState([]);
+    const [grupoUm, setGrupoUm] = useState([]);
+    const [grupoDois, setGrupoDois] = useState([]);
+    const [grupoTres, setGrupoTres] = useState([]);
+    const [grupoQuatro, setGrupoQuatro] = useState([]);
 
     useEffect(() => {
-        ListarParticipantes();
+        api.get(`/participantes`)
+        .then(response => {
+            const quantidadePorGrupo = 5;
+            let g1 = [];
+            let g2 = [];
+            let g3 = [];
+            let g4 = [];
+            
+            setParticipantes(response.data);
+
+            for(let i = 0; i < response.data.length; i++) {
+
+                if(g1.length < quantidadePorGrupo) {
+                    g1.push(response.data[i]);
+                } else if(g2.length < quantidadePorGrupo) {
+                    g2.push(response.data[i]);
+
+                } else if(g3.length < quantidadePorGrupo) {
+                    g3.push(response.data[i]);
+
+                } else {
+                    g4.push(response.data[i]);
+                }
+            }
+
+          setGrupoUm(g1);
+          setGrupoDois(g2);
+          setGrupoTres(g3);
+          setGrupoQuatro(g4);
+
+        });        
 
     }, [participantes.id]);
 
-    function ListarParticipantes() {
-        api.get(`/`)
+    async function ListarParticipantes() {
+      await api.get(`/participantes`)
         .then(response => {
+            const quantidadePorGrupo = 5;
+            let g1 = [];
+            let g2 = [];
+            let g3 = [];
+            let g4 = [];
+            
             setParticipantes(response.data);
-            console.log(response.data)
-        });
+
+            for(let i = 0; i < response.data.length; i++) {
+
+                if(g1.length < quantidadePorGrupo) {
+                    g1.push(response.data[i]);
+                } else if(g2.length < quantidadePorGrupo) {
+                    g2.push(response.data[i]);
+
+                } else if(g3.length < quantidadePorGrupo) {
+                    g3.push(response.data[i]);
+
+                } else {
+                    g4.push(response.data[i]);
+                }
+            }
+
+          setGrupoUm(g1);
+          setGrupoDois(g2);
+          setGrupoTres(g3);
+          setGrupoQuatro(g4);
+
+        });        
     }
-     const recarregarParticipantes = (e) => {
+
+     async function recarregarParticipantes(e) {
         e.preventDefault();
-        alert("Gerando grupo..")
+        await ListarParticipantes();
      }
 
     return (
@@ -59,116 +120,88 @@ import api from '../../service/api';
                                                             <th>Username</th>
                                                             <th>E-mail</th>                                                            
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>                                                           
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>                                                            
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">3</th>
-                                                            <td>Larry</td>
-                                                            <td>the Bird</td>                                                          
-                                                        </tr>
-                                                    </tbody>
-                                            </Table>
-                                            
+                                                    </thead>                                                   
+                                                        {
+                                                            grupoUm.map(g1 => (
+                                                                <tbody>  
+                                                                    <tr>
+                                                                        <th scope="row">{g1.id}</th>
+                                                                        <td>{g1.nome.toUpperCase()}</td>
+                                                                        <td>{g1.email}</td>                                                           
+                                                                    </tr>                                                                   
+                                                                </tbody>
+                                                            ))
+                                                        }                                                    
+                                            </Table>                                            
                                         </Col>
                                         <Col sm="6" className="mb-4">
                                             <h2 className="mb-4">Grupo 2</h2>
                                             <Table hover bordered>
                                             <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Username</th>
-                                                            <th>E-mail</th>                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>                                                           
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>                                                            
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">3</th>
-                                                            <td>Larry</td>
-                                                            <td>the Bird</td>                                                          
-                                                        </tr>
-                                                    </tbody>
-                                            </Table>
-                                            
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Username</th>
+                                                    <th>E-mail</th>                                                            
+                                                </tr>
+                                            </thead>
+                                                    {
+                                                        grupoDois.map(g2 => (
+                                                            <tbody>  
+                                                                <tr>
+                                                                    <th scope="row">{g2.id}</th>
+                                                                    <td>{g2.nome.toUpperCase()}</td>
+                                                                    <td>{g2.email}</td>                                                           
+                                                                </tr>                                                                   
+                                                            </tbody>
+                                                        ))
+                                                    }      
+                                            </Table>                                            
                                         </Col>
                                         <Col sm="6" className="mt-2">
                                             <h2 className="mb-4">Grupo 3</h2>
                                             <Table hover bordered>
                                             <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Username</th>
-                                                            <th>E-mail</th>                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>                                                           
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>                                                            
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">3</th>
-                                                            <td>Larry</td>
-                                                            <td>the Bird</td>                                                          
-                                                        </tr>
-                                                    </tbody>
-                                            </Table>
-                                            
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Username</th>
+                                                    <th>E-mail</th>                                                            
+                                                </tr>
+                                            </thead>
+                                                    {
+                                                        grupoTres.map(g3 => (
+                                                            <tbody>  
+                                                                <tr>
+                                                                    <th scope="row">{g3.id}</th>
+                                                                    <td>{g3.nome.toUpperCase()}</td>
+                                                                    <td>{g3.email}</td>                                                           
+                                                                </tr>                                                                   
+                                                            </tbody>
+                                                        ))
+                                                    }      
+                                            </Table>                                            
                                         </Col>
                                         <Col sm="6" className="mt-2">
                                             <h2 className="mb-4">Grupo 4</h2>
                                             <Table hover bordered>
                                             <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Username</th>
-                                                            <th>E-mail</th>                                                            
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>                                                           
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>                                                            
-                                                        </tr>
-                                                        <tr>
-                                                            <th scope="row">3</th>
-                                                            <td>Larry</td>
-                                                            <td>the Bird</td>                                                          
-                                                        </tr>
-                                                    </tbody>
-                                            </Table>
-                                            
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Username</th>
+                                                    <th>E-mail</th>                                                            
+                                                </tr>
+                                            </thead>
+                                                    {
+                                                        grupoQuatro.map(g4 => (
+                                                            <tbody>  
+                                                                <tr>
+                                                                    <th scope="row">{g4.id}</th>
+                                                                    <td>{g4.nome.toUpperCase()}</td>
+                                                                    <td>{g4.email}</td>                                                           
+                                                                </tr>                                                                   
+                                                            </tbody>
+                                                        ))
+                                                    }      
+                                            </Table>                                            
                                         </Col>
                                     </Row>
                                 </CardBody>

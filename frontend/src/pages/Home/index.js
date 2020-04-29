@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import  './style.css';
 import { 
     Container, 
@@ -55,9 +55,17 @@ toastr.options = {
    
     const toggle = () => setModal(!modal);
 
-    useEffect(() => {
-        ListarMensagens();
+    useLayoutEffect( () => {
+        async function fetchMsg() {
+            await api.get('/mensagem')
+            .then(response => {
+                setMensagens(response.data);
+                console.log(response.data)
+            });
 
+        }
+
+       fetchMsg();
     }, [mensagens.id]);
 
     function ListarMensagens() {
