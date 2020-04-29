@@ -14,7 +14,7 @@ import api from '../../service/api';
     useEffect(() => {
         api.get(`/participantes`)
         .then(response => {
-            const quantidadePorGrupo = 5;
+            const quantidadePorGrupo = 29;
             let g1 = [];
             let g2 = [];
             let g3 = [];
@@ -33,7 +33,9 @@ import api from '../../service/api';
                     g3.push(response.data[i]);
 
                 } else {
-                    g4.push(response.data[i]);
+                    if(i < 117) {
+                        g4.push(response.data[i]);
+                    }
                 }
             }
 
@@ -49,7 +51,7 @@ import api from '../../service/api';
     async function ListarParticipantes() {
       await api.get(`/participantes`)
         .then(response => {
-            const quantidadePorGrupo = 5;
+            const quantidadePorGrupo = 29;
             let g1 = [];
             let g2 = [];
             let g3 = [];
@@ -68,21 +70,28 @@ import api from '../../service/api';
                     g3.push(response.data[i]);
 
                 } else {
-                    g4.push(response.data[i]);
+                    if(i < 117) {
+                        g4.push(response.data[i]);
+                    }
                 }
             }
 
-          setGrupoUm(g1);
-          setGrupoDois(g2);
-          setGrupoTres(g3);
-          setGrupoQuatro(g4);
-
+            setGrupoUm(g1);
+            setGrupoDois(g2);
+            setGrupoTres(g3);
+            setGrupoQuatro(g4);
+            
+            console.log("4",grupoQuatro.length)
+            console.log("3",grupoTres.length)
+            console.log("2",grupoDois.length)
+            console.log("1",grupoUm.length)
         });        
     }
 
-     async function recarregarParticipantes(e) {
+     async function recarregarParticipantes(e) { 
         e.preventDefault();
         await ListarParticipantes();
+        console.log(participantes)
      }
 
     return (
@@ -123,7 +132,7 @@ import api from '../../service/api';
                                                     </thead>                                                   
                                                         {
                                                             grupoUm.map(g1 => (
-                                                                <tbody>  
+                                                                <tbody key={g1.id}>  
                                                                     <tr>
                                                                         <th scope="row">{g1.id}</th>
                                                                         <td>{g1.nome.toUpperCase()}</td>
@@ -146,7 +155,7 @@ import api from '../../service/api';
                                             </thead>
                                                     {
                                                         grupoDois.map(g2 => (
-                                                            <tbody>  
+                                                            <tbody  key={g2.id}>  
                                                                 <tr>
                                                                     <th scope="row">{g2.id}</th>
                                                                     <td>{g2.nome.toUpperCase()}</td>
@@ -169,7 +178,7 @@ import api from '../../service/api';
                                             </thead>
                                                     {
                                                         grupoTres.map(g3 => (
-                                                            <tbody>  
+                                                            <tbody  key={g3.id}>  
                                                                 <tr>
                                                                     <th scope="row">{g3.id}</th>
                                                                     <td>{g3.nome.toUpperCase()}</td>
@@ -192,7 +201,7 @@ import api from '../../service/api';
                                             </thead>
                                                     {
                                                         grupoQuatro.map(g4 => (
-                                                            <tbody>  
+                                                            <tbody  key={g4.id}>  
                                                                 <tr>
                                                                     <th scope="row">{g4.id}</th>
                                                                     <td>{g4.nome.toUpperCase()}</td>

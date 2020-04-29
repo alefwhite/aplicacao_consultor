@@ -27,10 +27,10 @@ export default function Routes() {
             <Switch>
                     <Route path="/" exact component={Login}/>
                     <Route exact path="/registrar" component={Registrar}/>
-                    <Route exact path="/home" component={Home}/>
-                    <Route exact path="/participantes" component={Participantes}/>
-                    <Route exact path="/minhasMensagens" component={MinhasMensagens}/>
-                    <Route component={NotFound}/>
+                    <Permissao exact path="/home" component={Home}/>
+                    <Permissao exact path="/participantes" component={Participantes}/>
+                    <Permissao exact path="/minhasMensagens" component={MinhasMensagens}/>
+                    <Permissao component={NotFound}/>
 
             </Switch>        
         </BrowserRouter>

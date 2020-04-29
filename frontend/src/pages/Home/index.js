@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import  './style.css';
 import { 
     Container, 
@@ -17,7 +17,8 @@ import {
     ModalHeader, 
     ModalBody, 
     ModalFooter,
-    FormGroup 
+    FormGroup,
+    Spinner  
 } from 'reactstrap';
 import Header from '../../assets/components/Header';
 import api from '../../service/api';
@@ -42,7 +43,8 @@ toastr.options = {
     "hideMethod": "fadeOut"
 }
 
- const Home = () => {  
+ const Home = () => {
+    const [load, setLoad] = useState(false);  
     const [modal, setModal] = useState(false);
     const [mensagens, setMensagens] = useState([]);
     const [novaMensagem, setNovaMensagem] = useState("");
@@ -55,18 +57,27 @@ toastr.options = {
    
     const toggle = () => setModal(!modal);
 
-    useLayoutEffect( () => {
-        async function fetchMsg() {
-            await api.get('/mensagem')
-            .then(response => {
-                setMensagens(response.data);
-                console.log(response.data)
-            });
+    useEffect( () => {
+        api.get('/mensagem')
+        .then(response => {
+            setMensagens(response.data);
+            console.log(response.data)
+            setLoad(true);
+        });     
 
-        }
+        // async function fetchMsg() {
+        //     await api.get('/mensagem')
+        //     .then(response => {
+        //         setMensagens(response.data);
+        //         console.log(response.data)
+        //         setLoad(true);
+        //     });          
+            
+        // }
+        
+        // fetchMsg();       
 
-       fetchMsg();
-    }, [mensagens.id]);
+    }, []);
 
     function ListarMensagens() {
         api.get('/mensagem')
@@ -143,117 +154,131 @@ toastr.options = {
 
         return dataFormatada;
     }
-
+   
     return (
-        <>
-            <div className="">
-                <Header/>
-                <Container>
-                    <Row className="justify-content-center">
-                        <Col md="12">
-                            <Card>
-                                <CardBody className="p-4">
-                                    <h1>Bem vindo! - <span style={{fontSize: "0.8em"}}>{retornaUsuarioLogado().toUpperCase()}</span></h1>
-                                    <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br/>
-                                    </p>
-                                    <Row>
-                                        <Col md="12" className="mt-5">
-                                            <Button outline color="primary" size="lg" block onClick={toggle}>Nova Mensagem?</Button>
-                                        </Col>
-                                    </Row>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col md="12" className="mt-5 p-4">
-                            <Card>
-                                <CardBody>
-                                    <Form onSubmit={filtrarMsgs}>
-                                        <h1 className=" d-flex justify-content-center">Mensagens</h1>                                      
-                                        
-                                        <InputGroup className="mt-3 p-5">
-                                            <Label for="exampleDate">Username</Label>
-                                            <Input 
-                                                type="text" 
-                                                className="ml-2 mr-3"
-                                                placeholder="Digite o username desejado"
-                                                value={userName}
-                                                onChange={e => setUserName(e.target.value)}
-                                            />
-
-                                            <Label for="exampleDate">Data</Label>
-                                            <Input 
-                                                className="ml-2 mr-3"
-                                                type="date"
-                                                name="date"
-                                                id="exampleDate"
-                                                value={data}
-                                                onChange={e => setData(e.target.value)}
-                                            />
-
-                                            <Label for="exampleDate">Ordenar</Label>
-                                            <Input type="select" className="ml-2" value={ordenar} onChange={e => setOrdenar(e.target.value)}>
-                                                <option value={1}>Mais recentes</option>
-                                                <option value={2}>Mais antigas</option>
-                                            </Input>
-                                            <Button className="ml-3" color="success" type="submit">Filtrar</Button>
-                                        </InputGroup>
-                                        
-                                        
-                                    </Form>
-
-                                    <Col md="12" className="mt-2">
+        load ?
+            <>  
+                <div className="">
+                    <Header/>
+                    <Container>
+                        <Row className="justify-content-center">
+                            <Col md="12">
+                                <Card>
+                                    <CardBody className="p-4">
+                                        <h1>Bem vindo! - <span style={{fontSize: "0.8em"}}>{retornaUsuarioLogado().toUpperCase()}</span></h1>
+                                        <p>
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br/>
+                                        </p>
                                         <Row>
-                                            {      
-                                                
-                                                mensagens.length > 0 ?
-                                                mensagens.map(msg => (
-                                                    <Col sm="4" className="mb-4" key={msg.id}>
-                                                        <Card body>
-                                                            <CardTitle style={{fontSize:"1.2em"}}>Mensagem de: {msg.nome.toUpperCase()}</CardTitle>
-                                                            <CardText>{msg.msg}</CardText>
-                                                            <CardText>Data: {FormatarData(msg.updated_at)}</CardText>
-                                                            {tipoUsuario.tipo_usuario === 1 ? 
-                                                                <Button outline color="danger" onClick={() => handleDeleteMensagem(msg.id)}>Apagar</Button> : ""
-                                                            }
-                                                        </Card>
-                                                    </Col>                                                                                  
-                                                
-                                                ))
-                                                : <Col className="p-1 ml-5 d-flex justify-content-center"><h1>Não foi possível encontrar as mensagens :(</h1></Col>
-                                            } 
-                                        </Row>                        
-                                    </Col>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>                    
-                </Container>
-            </div>
-            <Modal isOpen={modal} toggle={toggle} >
-                <ModalHeader toggle={toggle}>Inserir Nova Mensagem</ModalHeader>
-                <Form onSubmit={handleNovaMensagem}>
-                    <ModalBody>
-                        <FormGroup  className="p-1">
-                            <Col sm="12">
-                                <Label for="msg" style={{fontSize:"1.2em"}}>Escreva aqui sua mensagem!</Label>
-                                <Input 
-                                    required type="textarea" 
-                                    name="text" id="msg" 
-                                    size="lg" 
-                                    style={{height:"150px"}}
-                                    value={novaMensagem}
-                                    onChange={e => setNovaMensagem(e.target.value)}
-                                />
+                                            <Col md="12" className="mt-5">
+                                                <Button outline color="primary" size="lg" block onClick={toggle}>Nova Mensagem?</Button>
+                                            </Col>                                        
+                                        </Row>
+                                    </CardBody>
+                                </Card>
                             </Col>
-                        </FormGroup>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button outline color="info" type="submit">Salvar</Button>{' '}
-                        <Button outline color="secondary" onClick={toggle}>Sair</Button>
-                    </ModalFooter>
-                </Form>
-            </Modal>           
+                            <Col md="12" className="mt-5 p-4">
+                                <Card>
+                                    <CardBody>
+                                        <Form onSubmit={filtrarMsgs}>
+                                            <h1 className=" d-flex justify-content-center">Mensagens</h1>                                      
+                                            {/* {   
+                                                load ?
+                                                    <div className="mt-5 d-flex justify-content-center">
+                                                        <Spinner  style={{ width: '10rem', height: '10rem' }} color="primary"/>
+                                                    </div>
+                                                : ""
+                                            }                                   */}
+                                        
+                                            <InputGroup className="mt-3 p-5">
+                                                <Label for="exampleDate">Username</Label>
+                                                <Input 
+                                                    type="text" 
+                                                    className="ml-2 mr-3"
+                                                    placeholder="Digite o username desejado"
+                                                    value={userName}
+                                                    onChange={e => setUserName(e.target.value)}
+                                                />
+
+                                                <Label for="exampleDate">Data</Label>
+                                                <Input 
+                                                    className="ml-2 mr-3"
+                                                    type="date"
+                                                    name="date"
+                                                    id="exampleDate"
+                                                    value={data}
+                                                    onChange={e => setData(e.target.value)}
+                                                />
+
+                                                <Label for="exampleDate">Ordenar</Label>
+                                                <Input type="select" className="ml-2" value={ordenar} onChange={e => setOrdenar(e.target.value)}>
+                                                    <option value={1}>Mais recentes</option>
+                                                    <option value={2}>Mais antigas</option>
+                                                </Input>
+                                                <Button className="ml-3" color="success" type="submit">Filtrar</Button>
+                                            </InputGroup>
+                                            
+                                            
+                                        </Form>
+
+                                        <Col md="12" className="mt-2">
+                                            <Row>
+                                                {      
+                                                    
+                                                    mensagens.length > 0 ?
+                                                    mensagens.map(msg => (
+                                                        <Col sm="4" className="mb-4" key={msg.id}>
+                                                            <Card body>
+                                                                <CardTitle style={{fontSize:"1.2em"}}>Mensagem de: {msg.nome.toUpperCase()}</CardTitle>
+                                                                <CardText>{msg.msg}</CardText>
+                                                                <CardText>Data: {FormatarData(msg.updated_at)}</CardText>
+                                                                {tipoUsuario.tipo_usuario === 1 ? 
+                                                                    <Button outline color="danger" onClick={() => handleDeleteMensagem(msg.id)}>Apagar</Button> : ""
+                                                                }
+                                                            </Card>
+                                                        </Col>                                                                                  
+                                                    
+                                                    ))
+                                                    : <Col className="p-1 ml-5 d-flex justify-content-center"><h1>Não foi possível encontrar as mensagens :(</h1></Col>
+                                                } 
+                                            </Row>                        
+                                        </Col>
+                                    </CardBody>
+                                </Card>
+                            </Col>
+                        </Row>                    
+                    </Container>
+                </div>
+                <Modal isOpen={modal} toggle={toggle} >
+                    <ModalHeader toggle={toggle}>Inserir Nova Mensagem</ModalHeader>
+                    <Form onSubmit={handleNovaMensagem}>
+                        <ModalBody>
+                            <FormGroup  className="p-1">
+                                <Col sm="12">
+                                    <Label for="msg" style={{fontSize:"1.2em"}}>Escreva aqui sua mensagem!</Label>
+                                    <Input 
+                                        required type="textarea" 
+                                        name="text" id="msg" 
+                                        size="lg" 
+                                        style={{height:"150px"}}
+                                        value={novaMensagem}
+                                        onChange={e => setNovaMensagem(e.target.value)}
+                                    />
+                                </Col>
+                            </FormGroup>
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button outline color="info" type="submit">Salvar</Button>{' '}
+                            <Button outline color="secondary" onClick={toggle}>Sair</Button>
+                        </ModalFooter>
+                    </Form>
+                </Modal>           
+            </>
+       : <> 
+            <Header/>
+            <div className="mt-5 d-flex justify-content-center">
+                <Spinner  style={{ width: '15rem', height: '15rem' }} type="grow" color="dark"/>
+            </div>
         </>
     );
  }
