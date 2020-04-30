@@ -16,7 +16,7 @@ module.exports = {
             .orderBy("mensagem.updated_at", order_by);
         }
         else if(nome && !updated_at) {
-            console.log("else if 1")
+            //console.log("else if 1")
             mensagens = await connection("mensagem")     
             .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
             .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
@@ -24,7 +24,7 @@ module.exports = {
             .orderBy("mensagem.id", order_by);
         } 
         else if(nome && updated_at) {
-            console.log("else if 2")
+            //console.log("else if 2")
              mensagens = await connection("mensagem")     
             .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
             .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
@@ -33,7 +33,7 @@ module.exports = {
             .orderBy("mensagem.id", order_by);
         }
         else {
-            console.log("else")
+            //console.log("else")
             mensagens = await connection("mensagem")     
             .join("usuario", {"usuario.id": "mensagem.id_usuario"} )
             .select("mensagem.id", "mensagem.msg", "mensagem.updated_at", "usuario.nome", "usuario.email", "mensagem.id_usuario")
@@ -128,7 +128,5 @@ module.exports = {
 
         return res.json(mensagens);
     }
-
-
 
 };

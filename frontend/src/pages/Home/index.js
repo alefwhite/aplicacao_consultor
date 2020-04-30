@@ -72,26 +72,13 @@ toastr.options = {
     }
 
     useEffect(() => {
-        // api.get('/mensagem')
-        // .then(response => {
-        //     setMensagens(response.data);
-        //     console.log(response.data)
-        //     setLoad(true);
-        // });     
-
-        // async function fetchMsg() {
-        //     await api.get('/mensagem')
-        //     .then(response => {
-        //         setMensagens(response.data);
-        //         console.log(response.data)
-        //         setLoad(true);
-        //     });          
-            
-        // }
-        
+                
         setTimeout(() => {
-            ListarMensagens();
-            setLoad(true);
+            api.get('/mensagem')
+            .then(response => {
+                setMensagens(response.data);                
+                setLoad(true);
+            });  
         }, 600);
         
     }, []);
@@ -99,8 +86,7 @@ toastr.options = {
     function ListarMensagens() {
         api.get('/mensagem')
         .then(response => {
-            setMensagens(response.data);
-            console.log(response.data)
+            setMensagens(response.data);           
         });
     }
 
@@ -121,9 +107,7 @@ toastr.options = {
                 ListarMensagens();
                 toggle();
                                 
-            }
-            console.log(response);
-            
+            }            
 
         } catch(erro) {
             toastr.error("Falha ao cadastrar mensagem, tente novamente");
@@ -135,15 +119,8 @@ toastr.options = {
 
         await api.get(`/mensagem?nome=${userName}&&updated_at=${data}&&order=${ordenar}`)
         .then(response => {                      
-            setMensagens(response.data);            
-            
-            console.log(response.data)
+            setMensagens(response.data);
         });
-
-        console.log(userName)
-        console.log(data)
-        console.log(ordenar)
-
     }
 
     function FormatarData(data) {

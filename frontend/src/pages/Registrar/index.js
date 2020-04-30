@@ -50,13 +50,10 @@ const Register = (props) => {
                 toastr.success("Cadastro efetuado com sucesso!");
 
                 history.push('/');
-
-                console.log(response);
-
             }
 
         } catch (error) {
-            
+            toastr.error("Erro ao Cadastrar, tente novamente!");
         }
      }
 

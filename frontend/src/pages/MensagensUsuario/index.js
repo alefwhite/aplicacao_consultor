@@ -53,7 +53,6 @@ toastr.options = {
         api.get(`/mensagemUsuario/${tipoUsuario.id}`)
         .then(response => {
             setMensagens(response.data);
-            console.log(response.data)
         });
 
     }, [tipoUsuario.id]);
@@ -61,8 +60,7 @@ toastr.options = {
     function ListarMensagens() {
         api.get(`/mensagemUsuario/${tipoUsuario.id}`)
         .then(response => {
-            setMensagens(response.data);
-            console.log(response.data)
+            setMensagens(response.data);           
         });
     }
 
@@ -76,7 +74,7 @@ toastr.options = {
             });
 
        } catch(erro) {
-           alert('Erro ao deletar caso, tente novamente.')
+           toastr.error('Erro ao deletar caso, tente novamente.')
        }
     }
 
@@ -103,7 +101,7 @@ toastr.options = {
             });
 
        } catch(erro) {
-           alert('Erro ao deletar caso, tente novamente.')
+           toastr.error('Erro ao deletar caso, tente novamente.')
        }
     }
 

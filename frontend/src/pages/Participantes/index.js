@@ -46,7 +46,7 @@ import api from '../../service/api';
 
         });        
 
-    }, [participantes.id]);
+    }, []);
 
     async function ListarParticipantes() {
       await api.get(`/participantes`)
