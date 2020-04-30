@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from '../../service/api';
 import  './style.css';
 import { 
     Container, 
@@ -21,7 +22,6 @@ import {
     Spinner  
 } from 'reactstrap';
 import Header from '../../assets/components/Header';
-import api from '../../service/api';
 import toastr from 'toastr';
 import retornaUsuarioLogado from '../../service/nome';
 
@@ -57,38 +57,6 @@ toastr.options = {
    
     const toggle = () => setModal(!modal);
 
-    useEffect( () => {
-        // api.get('/mensagem')
-        // .then(response => {
-        //     setMensagens(response.data);
-        //     console.log(response.data)
-        //     setLoad(true);
-        // });     
-
-        async function fetchMsg() {
-            await api.get('/mensagem')
-            .then(response => {
-                setMensagens(response.data);
-                console.log(response.data)
-                setLoad(true);
-            });          
-            
-        }
-        
-        setTimeout(() => {
-            fetchMsg();
-        }, 600)
-
-    }, []);
-
-    function ListarMensagens() {
-        api.get('/mensagem')
-        .then(response => {
-            setMensagens(response.data);
-            console.log(response.data)
-        });
-    }
-
     async function handleDeleteMensagem(id) {
         try {
             await api.delete(`/mensagem/${id}`)
@@ -99,9 +67,43 @@ toastr.options = {
             });
 
        } catch(erro) {
-           alert('Erro ao deletar caso, tente novamente.')
+           toastr.error('Erro ao deletar caso, tente novamente.')
        }
     }
+
+    useEffect(() => {
+        // api.get('/mensagem')
+        // .then(response => {
+        //     setMensagens(response.data);
+        //     console.log(response.data)
+        //     setLoad(true);
+        // });     
+
+        // async function fetchMsg() {
+        //     await api.get('/mensagem')
+        //     .then(response => {
+        //         setMensagens(response.data);
+        //         console.log(response.data)
+        //         setLoad(true);
+        //     });          
+            
+        // }
+        
+        setTimeout(() => {
+            ListarMensagens();
+            setLoad(true);
+        }, 600);
+        
+    }, []);
+
+    function ListarMensagens() {
+        api.get('/mensagem')
+        .then(response => {
+            setMensagens(response.data);
+            console.log(response.data)
+        });
+    }
+
 
     async function handleNovaMensagem(e) {
         e.preventDefault();
@@ -280,7 +282,7 @@ toastr.options = {
             <Header/>
             <div className="mt-5 d-flex justify-content-center">
                 <Spinner  style={{ width: '15rem', height: '15rem' }} type="grow" color="dark"/>
-            </div>
+            </div>          
         </>
     );
  }

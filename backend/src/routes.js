@@ -19,11 +19,13 @@ routes.post('/tipoUsuario', tipoUsuarioController.create);
 routes.get('/usuario', UsuarioController.index);
 routes.post('/usuario', UsuarioController.create);
 
+// Mensagem
+routes.get('/mensagem', MensagemController.index);
+
 // Autenticação
 routes.use(authMiddleware);
 
 // Mensagem
-routes.get('/mensagem', MensagemController.index);
 routes.get('/mensagemUsuario/:id', MensagemController.mensagemUsuario);
 routes.post('/mensagem', MensagemController.create);
 routes.delete('/mensagem/:id', MensagemController.delete);
