@@ -39,6 +39,8 @@ toastr.options = {
         }
 
         try {
+            //localStorage.clear()
+
             const response = await api.post('/session', data);
 
             if(response.status === 200) {
@@ -50,6 +52,7 @@ toastr.options = {
                 history.push('/home');
 
                 console.log(response);
+                console.log("token",response.data.token)
 
             }
 

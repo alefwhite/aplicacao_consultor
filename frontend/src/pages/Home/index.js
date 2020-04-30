@@ -98,8 +98,22 @@ toastr.options = {
             msg: novaMensagem
         };
 
+        /*
+            Por algum motivo inesperado assim que starta a aplicação 
+            Quando o usuário vai inserir uma mensagem ele está dando erro de autorização
+            Mesmo ja tendo criado as configs do axios em service 
+            Consegui solucionar o erro colocando o token na config e passando ele na requisição
+
+        */
+
+        const token = localStorage.getItem("token");
+       
+        let config = {
+            headers: {Authorization: "bearer " + token}
+        }
+
         try {
-            const response = await api.post('/mensagem', data);
+            const response = await api.post('/mensagem', data, config);
 
             if(response.status === 200) {
                 toastr.info(response.data.message);
@@ -239,8 +253,9 @@ toastr.options = {
                                     <Label for="msg" style={{fontSize:"1.2em"}}>Escreva aqui sua mensagem!</Label>
                                     <Input 
                                         required type="textarea" 
-                                        name="text" id="msg" 
-                                        size="lg" 
+                                        name="text" 
+                                        id="msg" 
+                                        bsSize="lg" 
                                         style={{height:"150px"}}
                                         value={novaMensagem}
                                         onChange={e => setNovaMensagem(e.target.value)}

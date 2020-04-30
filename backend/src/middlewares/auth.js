@@ -20,6 +20,7 @@ module.exports = async (req, res, next) => {
     return next();
 
   } catch (error) {
+    console.log(authHeader);
     return res.status(401).json({ error: 'Token inválido!' });
   }
 
