@@ -59,7 +59,13 @@ toastr.options = {
 
     async function handleDeleteMensagem(id) {
         try {
-            await api.delete(`/mensagem/${id}`)
+            const token = localStorage.getItem("token");
+       
+            let config = {
+                headers: {Authorization: "bearer " + token}
+            }
+
+            await api.delete(`/mensagem/${id}`, config)
             .then(response => {
                 console.log(response)
                 if(response.status === 200) toastr.success("Sua mensagem foi deletada com sucesso!");
@@ -190,7 +196,7 @@ toastr.options = {
                                                 <Input 
                                                     type="text" 
                                                     className="ml-2 mr-3"
-                                                    placeholder="Digite o username desejado"
+                                                    placeholder="Digite o nome desejado"
                                                     value={userName}
                                                     onChange={e => setUserName(e.target.value)}
                                                 />

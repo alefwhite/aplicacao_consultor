@@ -79,8 +79,9 @@ toastr.options = {
     }
 
    
-    async function handleUpdateMensagem(id) {
-        setIdMsg(id);
+    async function handleUpdateMensagem(msg) {
+        setIdMsg(msg.id);
+        setEditarMsg(msg.msg);
         toggle();       
     }
 
@@ -151,13 +152,13 @@ toastr.options = {
                                                             <CardTitle style={{fontSize:"1.2em"}}>Mensagem de: {msg.nome.toUpperCase()}</CardTitle>
                                                             <CardText>{msg.msg}</CardText>
                                                             <CardText>Data: {FormatarData(msg.updated_at)}</CardText>
-                                                            <Button className="mb-3" outline color="primary" onClick={() => handleUpdateMensagem(msg.id)}>Editar</Button>
+                                                            <Button className="mb-3" outline color="primary" onClick={() => handleUpdateMensagem(msg)}>Editar</Button>
                                                             <Button outline color="danger" onClick={() => handleDeleteMensagem(msg.id)}>Apagar</Button>
                                                         </Card>
                                                     </Col>                                                                                  
                                                 
                                                 ))
-                                                : <Col className="p-1 ml-5 d-flex justify-content-center"><h1>Não foi possível encontrar as mensagens :(</h1></Col>
+                                                : <Col className="p-1 ml-5 d-flex justify-content-center"><h1>Você não possui mensagens :(</h1></Col>
                                             } 
                                         </Row>                        
                                     </Col>

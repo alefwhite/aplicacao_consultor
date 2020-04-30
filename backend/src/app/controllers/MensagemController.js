@@ -77,6 +77,7 @@ module.exports = {
         const mensagem = await connection("mensagem").where('id', id).select("id_usuario").first();
         const tipoUsuario = await connection("usuario").where('id', id_usuario).select("tipo_usuario").first();
        
+
         if(mensagem.id_usuario == id_usuario || tipoUsuario.tipo_usuario == 1) {
             await connection('mensagem').where('id', id).delete();
             return res.json({message: "Mensagem deletada com sucesso!"});

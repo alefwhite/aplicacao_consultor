@@ -4,7 +4,7 @@ const { promisify } = require('util');
 
 module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
+  console.log("token", authHeader)
   if(!authHeader) {
     return res.status(401).json({ error: 'Token não fornecido!' });
   }
